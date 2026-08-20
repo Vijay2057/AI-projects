@@ -1,0 +1,4 @@
+ai-chatbot/simple-ai-chatbots/.env
+ai-chatbot/chatbot-app/.env
+venv-chatbot/
+__pycache__/

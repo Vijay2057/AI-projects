@@ -1,0 +1,10 @@
+google-genai
+fastapi
+uvicorn
+python-dotenv
+sqlalchemy[asyncio]
+alembic
+asyncpg
+psycopg2
+PyJWT
+argon2-cffi
