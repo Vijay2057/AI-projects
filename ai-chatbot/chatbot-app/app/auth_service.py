@@ -18,7 +18,7 @@ class AuthService:
         expire = datetime.now() + timedelta(minutes=30)
         payload = {"sub": username, "exp": expire}
         token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
-        return {"token": token}
+        return {"access_token": token}
 
     async def get_current_user(self, token: str = Depends(oauth2_scheme)):
         try:

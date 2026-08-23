@@ -17,3 +17,13 @@ class LLMService:
             contents=chat
         )
         return response.text
+
+    async def generate_stream(self, chat):
+        response = await self.client.aio.models.generate_content_stream(
+            model="gemini-3.6-flash",
+            contents=chat
+        )
+
+        async for chunk in response:
+            if chunk.text:
+                yield chunk.text

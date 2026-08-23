@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID
@@ -12,6 +14,14 @@ from app.user_service import UserService
 app = FastAPI()
 router = APIRouter(prefix="/api")
 app.include_router(router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class RegistrationRequest(BaseModel):
@@ -59,8 +69,17 @@ async def chat(conversation_id: UUID,
                current_user: dict = Depends(auth_service.get_current_user),
                db:AsyncSession= Depends(get_db)):
     chat_service = ChatService(db)
-    response = await chat_service.chat_message(conversation_id, request.message)
-    return response
+    return StreamingResponse(
+        chat_service.chat_message(
+            conversation_id,
+            request.message,
+        ),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+        },
+    )
 
 
 

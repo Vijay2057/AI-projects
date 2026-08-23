@@ -13,6 +13,7 @@ class ChatService:
     def __init__(self, db: AsyncSession):
         self.db = db
         self.user_service = UserService(db)
+        self.llm_service = LLMService()
 
     async def create_conversation(self, user, title):
         # Make sure user exit in DB, if not create user
@@ -55,9 +56,14 @@ class ChatService:
         # add response message to message table
         await self.save_message(conversation_id, "user", query)
 
-        llm_service = LLMService()
-        response = await llm_service.generate(chat_history)
+        full_response = []
+        async for chunk in self.llm_service.generate_stream(chat_history):
+            full_response.append(chunk)
+
+            yield chunk
+
+        assistant_response = "".join(full_response)
+
         # add response message to message table
-        await self.save_message(conversation_id, "assistant", response)
-        return {"message": response}
+        await self.save_message(conversation_id, "assistant", assistant_response)
 
