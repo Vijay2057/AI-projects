@@ -1,6 +1,6 @@
 ai-chatbot/simple-ai-chatbots/.env
-ai-chatbot/chatbot-app/.env
-RAG/.env
-RAG/qdrant-rag/.env
+ai-chatbot/chatbot-app/
+RAG/
+RAG/qdrant-rag/
 venv-chatbot/
 __pycache__/
