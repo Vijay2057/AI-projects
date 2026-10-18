@@ -1,0 +1,6 @@
+langchain-core
+langchain-text-splitters
+langchain-qdrant
+langchain-google-genai
+qdrant-client
+python-dotenv

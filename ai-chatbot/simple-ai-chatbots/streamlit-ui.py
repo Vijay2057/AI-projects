@@ -6,11 +6,11 @@ API_URL = "http://127.0.0.1:8000/api/chat"
 
 
 st.set_page_config(
-    page_title="Naanu Chatbot",
+    page_title="My Chatbot",
     page_icon="🤖"
 )
 
-st.title("🤖 Naanu Chatbot")
+st.title("🤖 My Chatbot")
 
 
 # --------------------------------

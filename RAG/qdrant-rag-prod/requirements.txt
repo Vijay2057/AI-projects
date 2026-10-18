@@ -1,0 +1,5 @@
+google-genai
+qdrant-client
+python-dotenv
+langchain-text-splitters
+cohere
